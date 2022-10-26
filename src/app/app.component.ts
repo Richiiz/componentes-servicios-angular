@@ -9,6 +9,10 @@ import  {Product} from './models/product.models';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+showImg = true;
+
+
 // clase puesta en la class binding
 widthImg = 10
 
@@ -47,5 +51,10 @@ products: Product[] = [
   onLoaded(img: string){
     console.log('log Padre', img);
 
+  }
+
+  // con esto cambiamos el elemento y lo matamos
+  toggleImg(){
+    this.showImg = !this.showImg
   }
 }

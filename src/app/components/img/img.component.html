@@ -1,3 +1,5 @@
+<h3>{{counter}}</h3>
+
 <!-- clase de input -->
 <img width="200" (load)="imgLoad" (error)="imgError()" [src]="img" *ngIf="img; else elseImg">
 <ng-template #elseImg>

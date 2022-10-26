@@ -1,10 +1,20 @@
-<app-product [product]="product" *ngFor="let product of products"></app-product>
-
-
-
+<h1>ngDestroy setInput</h1>
+<p><input type="text"[(ngModel)]="imgParent"/></p>
+<!-- aqui matamos al elemento desde un metodo que cambia el estado en app.component -->
+<button (click)="toggleImg()">Toggle Img</button>
+<p>{{ showImg }}</p>
+<!-- ngIf se encarga de renderizar o no este componente, cuando no lo muestre, lo borrara -->
+<!-- ATENCION algunos componentes siguen ejecutandose a pesar de ser borrados, por eso es importante limpiar elementos con ngDestroy -->
+<!-- el set interval queda despierto hasta que manualmente se apague -->
+<app-img *ngIf="showImg" (load)="onLoaded($event)" [img]="imgParent"></app-img>
 <hr/>
+
+<app-product [product]="product" *ngFor="let product of products"></app-product>
+<hr/>
+
 <h1>USO DE INPUT y OUPUT</h1>
 <p><input type="text"[(ngModel)]="imgParent"/></p>
 
-<app-img (load)="onLoaded($event)" [img]="imgParent"></app-img>
+<!-- comentadd la linea de abajo para que no de pedillos :D -->
+<!-- <app-img (load)="onLoaded($event)" [img]="imgParent"></app-img> -->
 <!-- esto funciona como cualquer otra palabra clave de html como <p> pero con la diferencia de que "manda a llamar" lo que este dentro de nuestro componente, es decir el html. -->
