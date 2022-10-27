@@ -33,8 +33,8 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
   @Output() load = new EventEmitter<string>();
   imageDefault = "./assets/images/si.jpg"
 
-  counter = 0;
-  counterFn: number | undefined;
+  // counter = 0;
+  // counterFn: number | undefined;
 
 
 
@@ -62,12 +62,11 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
     // tambien corre una sola vez D:
     console.log('ngOnInit', 'imgValue => ', this.img);
   // con esto correremos un contador que se autosuma cada segundo
-
-  this.counterFn = window.setInterval(()=>{
-      this.counter += 1;
-      console.log('corriento counter');
-    }, 1000)
-  }
+  // this.counterFn = window.setInterval(()=>{
+    //   this.counter += 1;
+    //   console.log('corriento counter');
+    // }, 1000)
+}
 
   ngAfterViewInit() {
     // este corre depsues del render
@@ -79,7 +78,7 @@ export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy
     // este borra componentes, se borra de la interfaz y deja de existir
     console.log('ngOnDestroy');
     // esta es la manera correcta de matar un elemento
-    window.clearInterval (this.counterFn)
+    // window.clearInterval (this.counterFn)
   }
 
   imgError(){
