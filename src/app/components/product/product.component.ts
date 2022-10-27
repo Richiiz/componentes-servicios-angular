@@ -1,5 +1,5 @@
 // aqui ya estamso recibiendo el array desde el padre añadiendo el "Input"
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 // aqui importamos nuestro tipado, ese tipado se creo añadiendo una nueva carpeta llamada "models" y haciendo nuestro archivo prodyc.models.ts
 import { Product } from '../../models/product.models'
@@ -22,9 +22,14 @@ export class ProductComponent implements OnInit {
     price: 0
     }
 
+  @Output() addedProduct = new EventEmitter<Product>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onAddToCart(){
+    this.addedProduct.emit(this.product)
+  }
 }

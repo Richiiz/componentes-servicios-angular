@@ -9,6 +9,10 @@ import { Product } from '../../models/product.models';
 })
 export class ProductosComponent implements OnInit {
 
+
+  myShoppingCar: Product[] = [];
+  total = 0;
+
   products: Product[] = [
     {
       id: '1',
@@ -39,6 +43,13 @@ export class ProductosComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+
+  onAddToShoppingCar(product: Product){
+    this.myShoppingCar.push(product);
+    // reduce es un metodo dentro de los arrays, y sirve para calcular y reducir todo a un valor
+    this.total =  this.myShoppingCar.reduce((sum, item) => sum + item.price, 0);
   }
 
 }
