@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from '../../models/product.models';
 
+import { StoreService } from '../../services/store.service'
+
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -40,16 +42,23 @@ export class ProductosComponent implements OnInit {
     },
   ]
 
-  constructor() { }
+  constructor(
+    // de esta manera se usa un servicio de tienda dentro de un componente
+    private storeService: StoreService
+  ) {
+    this.myShoppingCar = this.storeService.getShoppingCart();
+  }
 
   ngOnInit(): void {
   }
 
 
   onAddToShoppingCar(product: Product){
-    this.myShoppingCar.push(product);
+    // this.myShoppingCar.push(product);
+
+    this.storeService.addProduct(product);
     // reduce es un metodo dentro de los arrays, y sirve para calcular y reducir todo a un valor
-    this.total =  this.myShoppingCar.reduce((sum, item) => sum + item.price, 0);
+    this.total =  this.storeService.getTotal();
   }
 
 }

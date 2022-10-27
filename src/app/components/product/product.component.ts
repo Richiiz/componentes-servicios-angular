@@ -1,3 +1,5 @@
+// en esta clase añadimos el OutPut para hacer una comunicacion al padre que en este caso seria productos
+
 // aqui ya estamso recibiendo el array desde el padre añadiendo el "Input"
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -22,6 +24,7 @@ export class ProductComponent implements OnInit {
     price: 0
     }
 
+    // aqui empezamos a hacer que el padre escuche el evento
   @Output() addedProduct = new EventEmitter<Product>();
 
   constructor() { }
@@ -30,6 +33,7 @@ export class ProductComponent implements OnInit {
   }
 
   onAddToCart(){
+    // aqui empezamos a hacer que el padre escuche el evento
     this.addedProduct.emit(this.product)
   }
 }
