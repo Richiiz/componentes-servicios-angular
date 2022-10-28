@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from '../../models/product.models';
 
-import { StoreService } from '../../services/store.service'
+import { StoreService } from '../../services/store.service';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-productos',
@@ -15,41 +16,21 @@ export class ProductosComponent implements OnInit {
   myShoppingCar: Product[] = [];
   total = 0;
 
-  products: Product[] = [
-    {
-      id: '1',
-      name: 'EL mejor juguete',
-      price: 565,
-      image: './assets/images/si.jpg'
-    },
-    {
-      id: '2',
-      name: 'Bicicleta casi nueva',
-      price: 356,
-      image: './assets/images/bici.jpg'
-    },
-    {
-      id: '3',
-      name: 'Colleción de albumnes',
-      price: 34,
-      image: './assets/images/album.jpg'
-    },
-    {
-      id: '4',
-      name: 'Mis libros',
-      price: 23,
-      image: './assets/images/libro.jpg'
-    },
-  ]
+  products: Product[] = [];
 
   constructor(
     // de esta manera se usa un servicio de tienda dentro de un componente
-    private storeService: StoreService
+    private storeService: StoreService,
+    private productsService: ProductsService
   ) {
     this.myShoppingCar = this.storeService.getShoppingCart();
   }
 
   ngOnInit(): void {
+    this.productsService.getAllProducts()
+    .subscribe(data => {
+      this.products = data;
+    });
   }
 
 

@@ -19,9 +19,11 @@ export class ProductComponent implements OnInit {
 // podemos poner los elementos del array opcionales pero no es tan buena practica en algunos casos, tenemos que poner los elementos del array sin nada y asi queda perfect papu.
   @Input() product: Product = {
     id: '',
-    name: '',
+    title: '',
     image: '',
-    price: 0
+    price: 0,
+    description: '',
+    category: ''
     }
 
     // aqui empezamos a hacer que el padre escuche el evento
