@@ -31,6 +31,8 @@ export class ProductComponent implements OnInit {
 
   constructor() { }
 
+
+  // informacion para mantener estilos de codificacion
   ngOnInit(): void {
   }
 
