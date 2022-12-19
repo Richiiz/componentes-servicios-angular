@@ -20,14 +20,18 @@ export class ProductComponent implements OnInit {
   @Input() product: Product = {
     id: '',
     title: '',
-    image: '',
+    images: [],
     price: 0,
     description: '',
-    category: ''
-    }
-
+    category: {
+      id: '',
+      name: '',
+    },
+  }
     // aqui empezamos a hacer que el padre escuche el evento
   @Output() addedProduct = new EventEmitter<Product>();
+  //una ves mas comunicamos nuestro evento hijo al padre
+  @Output() showProduct = new EventEmitter<string>();
 
   constructor() { }
 
@@ -39,5 +43,9 @@ export class ProductComponent implements OnInit {
   onAddToCart(){
     // aqui empezamos a hacer que el padre escuche el evento
     this.addedProduct.emit(this.product)
+  }
+
+  onShowDetail() {
+    this.showProduct.emit(this.product.id);
   }
 }

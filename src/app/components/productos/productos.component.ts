@@ -15,8 +15,8 @@ export class ProductosComponent implements OnInit {
 
   myShoppingCar: Product[] = [];
   total = 0;
-
   products: Product[] = [];
+  showProductDetail = false;
   today = new Date();
   date = new Date(2021, 1, 21)
 
@@ -42,6 +42,17 @@ export class ProductosComponent implements OnInit {
     this.storeService.addProduct(product);
     // reduce es un metodo dentro de los arrays, y sirve para calcular y reducir todo a un valor
     this.total =  this.storeService.getTotal();
+  }
+
+toggleProductDetails() {
+  this.showProductDetail = !this.showProductDetail;
+}
+
+onShowDetail(id: string){
+  this.productsService.getProduct(id)
+  .subscribe(data => {
+    console.log('product', data)
+  })
   }
 
 }

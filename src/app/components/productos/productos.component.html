@@ -17,10 +17,20 @@
   <!-- este todo lo transforma en mayuscula  -->
   {{'hOLA najsnJABJ jaaj ' | uppercase}}
 </p>
+
+<button (click)="toggleProductDetails()">click</button>
 <div class = "productos--grid">
   <app-product
   [product]="product"
   *ngFor="let product of products"
   (addedProduct)="onAddToShoppingCar($event)"
+  (showProduct)="onShowDetail($event)"
   ></app-product>
+</div>
+<!-- esto muestra una clase dinamica que viene del archivo productos.components.ts -->
+<div class="product-detail" [class.active]="showProductDetail">
+  <div>
+    <button (click)="toggleProductDetails()">Close</button>
+    Contenido
+  </div>
 </div>
