@@ -17,6 +17,18 @@ export class ProductosComponent implements OnInit {
   total = 0;
   products: Product[] = [];
   showProductDetail = false;
+  productChosen: Product = {
+    // siempre se pone un estado por defecto RECUERDALO
+    id: '',
+    price: 0,
+    images: [],
+    title: '',
+    category: {
+      id: '',
+      name: '',
+    },
+    description: '',
+  }
   today = new Date();
   date = new Date(2021, 1, 21)
 
@@ -51,7 +63,10 @@ toggleProductDetails() {
 onShowDetail(id: string){
   this.productsService.getProduct(id)
   .subscribe(data => {
-    console.log('product', data)
+    // se pone la funcion que activa y desactiva el layout, tardara en mostrarse dependiendo lo que tarde en cargar la info
+    this.toggleProductDetails();
+    // traemos la info y la guardamos en una variable
+    this.productChosen = data;
   })
   }
 
