@@ -32,4 +32,9 @@ export class ProductsService {
   update(id: string, dto: UpdateProductDTO) {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
   }
+
+  // no necesitamos datos especiales, solo el id del producto que vamos a eliminar
+  delete(id: string) {
+    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+  }
 }

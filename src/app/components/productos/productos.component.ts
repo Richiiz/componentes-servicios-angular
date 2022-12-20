@@ -98,7 +98,20 @@ onShowDetail(id: string){
       // console.log('update', data);
       const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
       this.products[productIndex] = data;
+      this.productChosen = data;
     });
   }
 
+  deleteProduct(){
+    const id = this.productChosen.id;
+    this.productsService.delete(id)
+    .subscribe(() => {
+      // buscamos el id dentro de nuestro index para borrarlo
+      const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
+      // .splice eliminia nuestro producto en este caso solamente una posicion
+      this.products.splice(productIndex, 1);
+      // cierra nuestro slice para que se vea bonito uwu
+      this,this.showProductDetail = false
+    });
+  }
 }
