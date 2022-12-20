@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Product, CreateProductDTO } from '../../models/product.models';
+import { Product, CreateProductDTO, UpdateProductDTO } from '../../models/product.models';
 
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
@@ -83,6 +83,21 @@ onShowDetail(id: string){
       .subscribe(data => {
         // con esto insertamos los datos que se asignan
         this.products.unshift(data);
+    });
+  }
+
+  updateProduct() {
+    const changes: UpdateProductDTO = {
+      // tipamos de nuevo para que nos ayude a corroborar cuales son los elementos que se estaran editando.
+      // no obliga a cambiar lo demas ya que son opcionales.
+      title: 'nuevo titulo',
+    }
+    const id = this.productChosen.id;
+    this.productsService.update(id, changes)
+    .subscribe(data => {
+      // console.log('update', data);
+      const productIndex = this.products.findIndex(item => item.id === this.productChosen.id);
+      this.products[productIndex] = data;
     });
   }
 

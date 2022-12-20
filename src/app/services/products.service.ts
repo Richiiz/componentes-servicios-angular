@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 // servicio de angular para obtener datos de API
 import {HttpClient} from '@angular/common/http'
 
-import { Product, CreateProductDTO} from './../models/product.models';
+import { Product, CreateProductDTO, UpdateProductDTO} from './../models/product.models';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +27,9 @@ export class ProductsService {
     // nota que cada ves se hace un return para poder obtener la info
     // se espera que un post retorne es un producto
     return this.http.post<Product>(this.apiUrl, dto);
+  }
+
+  update(id: string, dto: UpdateProductDTO) {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
   }
 }
