@@ -52,7 +52,6 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-
   onAddToShoppingCar(product: Product){
     // this.myShoppingCar.push(product);
 

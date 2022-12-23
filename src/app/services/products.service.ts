@@ -33,6 +33,7 @@ export class ProductsService {
       params = params.set('limit', limit);
       params = params.set('offset', limit);
     }
+
     return this.http.get<Product[]>(this.apiUrl, { params })
     .pipe(
       retry(3),
