@@ -31,6 +31,7 @@ export class ProductosComponent implements OnInit {
   }
   limit = 10;
   offset = 0;
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
   today = new Date();
   date = new Date(2021, 1, 21)
 
@@ -60,18 +61,23 @@ export class ProductosComponent implements OnInit {
     this.total =  this.storeService.getTotal();
   }
 
-toggleProductDetails() {
-  this.showProductDetail = !this.showProductDetail;
-}
+  toggleProductDetails() {
+    this.showProductDetail = !this.showProductDetail;
+  }
 
-onShowDetail(id: string){
-  this.productsService.getProduct(id)
-  .subscribe(data => {
-    // se pone la funcion que activa y desactiva el layout, tardara en mostrarse dependiendo lo que tarde en cargar la info
+  onShowDetail(id: string){
+    this.statusDetail = 'loading';
     this.toggleProductDetails();
-    // traemos la info y la guardamos en una variable
-    this.productChosen = data;
-  })
+    this.productsService.getProduct(id)
+    .subscribe(data => {
+      // se pone la funcion que activa y desactiva el layout, tardara en mostrarse dependiendo lo que tarde en cargar la info
+      // traemos la info y la guardamos en una variable
+      this.productChosen = data;
+      this.statusDetail = 'success';
+    }, errorMsg => {
+      window.alert(errorMsg);
+      this.statusDetail = 'error';
+    })
   }
   createNewProduct(){
     // se tipa para que nos ayude, con el tipado ya sabra que nosotros vamos a crear un producto

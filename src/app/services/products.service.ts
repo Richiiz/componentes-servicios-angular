@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 // servicio de angular para obtener datos de API
-import { HttpClient, HttpParams} from '@angular/common/http'
+import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 // este import nos permite reintentar un metodo las veces que queramos
-import { retry } from 'rxjs/operators';
+import { retry, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { Product, CreateProductDTO, UpdateProductDTO} from './../models/product.models';
 
-import { environment } from './../../environments/environment'
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,21 @@ export class ProductsService {
       );
   }
   getProduct(id: string) {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+    return this.http.get<Product>(`${this.apiUrl}/${id}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) =>{
+        if (error.status === HttpStatusCode.Conflict) {
+        return throwError('UCHALAS algo falla en el server :(');
+        }
+        if (error.status === HttpStatusCode.NotFound) {
+        return throwError('El producto no existe mi buen chato D:');
+        }
+        if (error.status === HttpStatusCode.Unauthorized) {
+        return throwError('No estas permitido aca papu >:D');
+        }
+        return throwError('UCHALAS algo salio mal chato');
+      })
+    )
   }
 
   getProductsByPage(limit: number, offset: number){

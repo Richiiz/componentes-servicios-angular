@@ -19,6 +19,7 @@
 </p>
 
 <button (click)="createNewProduct()">Create</button>
+<button (click)="onShowDetail('374673254')">Detalle not found</button>
 <div class = "productos--grid">
   <app-product
   [product]="product"
@@ -30,6 +31,7 @@
 </div>
 <!-- esto muestra una clase dinamica que viene del archivo productos.components.ts -->
 <div class="product-detail" [class.active]="showProductDetail">
+  {{ statusDetail }}
   <!-- este se mostrara si y solo si obtiene la data -->
   <div *ngIf="productChosen">
     <button (click)="toggleProductDetails()">Close</button>
