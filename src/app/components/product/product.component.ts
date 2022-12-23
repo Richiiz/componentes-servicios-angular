@@ -4,7 +4,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 // aqui importamos nuestro tipado, ese tipado se creo añadiendo una nueva carpeta llamada "models" y haciendo nuestro archivo prodyc.models.ts
-import { Product } from '../../models/product.models'
+import { Product } from '../../models/product.model'
 
 @Component({
   selector: 'app-product',

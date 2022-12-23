@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 
 // aqui volvemos a importar nuestro tipado especifico para no tener que reescribir codigo
-import  {Product} from './models/product.models';
+import  {Product} from './models/product.model';
 
 @Component({
   selector: 'app-root',

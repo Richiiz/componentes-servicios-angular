@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 // servicio de angular para obtener datos de API
 import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 // este import nos permite reintentar un metodo las veces que queramos
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-import { Product, CreateProductDTO, UpdateProductDTO} from './../models/product.models';
+import { Product, CreateProductDTO, UpdateProductDTO} from '../models/product.model';
 
 import { environment } from './../../environments/environment';
 
@@ -35,8 +35,14 @@ export class ProductsService {
     }
     return this.http.get<Product[]>(this.apiUrl, { params })
     .pipe(
-      retry(3)
-      );
+      retry(3),
+      map(products => products.map(item => {
+        return {
+          ...item,
+          taxes: .19 * item.price
+        }
+      }))
+    );
   }
   getProduct(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`)

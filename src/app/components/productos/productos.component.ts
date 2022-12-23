@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Product, CreateProductDTO, UpdateProductDTO } from '../../models/product.models';
+import { Product, CreateProductDTO, UpdateProductDTO } from '../../models/product.model';
 
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
@@ -44,7 +44,7 @@ export class ProductosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productsService.getProductsByPage(10, 0)
+    this.productsService.getAllProducts(10, 0)
     .subscribe(data => {
       this.products = data;
       // siempre hay que darle un estado inicial, asi que como ya cargo la primer pagina, pues deberiamos dejarlo en la siguiente pagina.
