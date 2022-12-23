@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 // servicio de angular para obtener datos de API
 import { HttpClient, HttpParams} from '@angular/common/http'
+// este import nos permite reintentar un metodo las veces que queramos
+import { retry } from 'rxjs/operators';
 
 import { Product, CreateProductDTO, UpdateProductDTO} from './../models/product.models';
 
@@ -25,7 +27,10 @@ export class ProductsService {
       params = params.set('limit', limit);
       params = params.set('offset', limit);
     }
-    return this.http.get<Product[]>(this.apiUrl, { params });
+    return this.http.get<Product[]>(this.apiUrl, { params })
+    .pipe(
+      retry(3)
+      );
   }
   getProduct(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
