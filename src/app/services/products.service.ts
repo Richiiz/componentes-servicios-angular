@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 // este import nos permite reintentar un metodo las veces que queramos
 import { retry, catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, zip } from 'rxjs';
 
 import { Product, CreateProductDTO, UpdateProductDTO} from '../models/product.model';
 
@@ -46,6 +46,16 @@ export class ProductsService {
       }))
     );
   }
+
+  // es mejor hacer la logica en tus servicios
+fetchReadAndUpdate(id: string, dto: UpdateProductDTO) {
+  // el zip corre todo en paralelo
+    return zip(
+      this.getProduct(id),
+      this.update(id, dto)
+    );
+  }
+
   getProduct(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`)
     .pipe(

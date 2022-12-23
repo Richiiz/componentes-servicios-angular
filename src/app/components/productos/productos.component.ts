@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+// para evitar los callback hell se utiliza este import
+import { switchMap } from 'rxjs/operators';
 
 import { Product, CreateProductDTO, UpdateProductDTO } from '../../models/product.model';
 
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-productos',
@@ -79,6 +82,24 @@ export class ProductosComponent implements OnInit {
       this.statusDetail = 'error';
     })
   }
+
+// esta e suna forma de evitar el callback hell con promesas :D
+readAndUpdate(id: string) {
+  this.productsService.getProduct(id)
+  .pipe(
+    switchMap((product) => this.productsService.update(product.id, {title: 'change'})),
+    )
+  .subscribe(data => {
+    // esto se usa mas cuando tenemos dependecias 0_o
+    console.log(data);
+  });
+  this.productsService.fetchReadAndUpdate(id, {title: 'change'})
+  .subscribe(response => {
+    const read = response[0];
+    const update = response[1];
+  })
+}
+
   createNewProduct(){
     // se tipa para que nos ayude, con el tipado ya sabra que nosotros vamos a crear un producto
     // este CreateProductDTO viene del archivo product.models.ts
