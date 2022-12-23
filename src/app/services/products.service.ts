@@ -6,6 +6,8 @@ import { retry } from 'rxjs/operators';
 
 import { Product, CreateProductDTO, UpdateProductDTO} from './../models/product.models';
 
+import { environment } from './../../environments/environment'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +16,7 @@ export class ProductsService {
   // no enviariamos directamente con la peticion si no que simp,emente se pone el end point
   // el proxy se encargara de todo lo que venga de la api
   // la peticion no sale desde el puerto 4200 que es donde esta alojado el server si no que sale desde el link, e interpreta que no hay problema de CORS
-  private apiUrl = '/api/products'
+  private apiUrl = `${environment.API_URL}/api/products`;
 
   constructor(
     private http: HttpClient
