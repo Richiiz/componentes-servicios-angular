@@ -13,6 +13,7 @@ import { Product } from '../../models/product.model'
 })
 export class ProductComponent implements OnInit {
 
+
 // recuerda que es buena practica tipar los arrays que hagamos, los tipamos añadiendo ":" y nuestor tipado, despues asignamos con los "{}"
 // esto se enviara desde el padre para no ser renderizado desde este componente para poderse reusar.
 // aqui no podemos definir en vacio el product, ya que angular siempre pide tner un estado inicial de un elemento

@@ -43,6 +43,7 @@ export class ProductosComponent implements OnInit {
     this.myShoppingCar = this.storeService.getShoppingCart();
   }
 
+
   ngOnInit(): void {
     this.productsService.getAllProducts(10, 0)
     .subscribe(data => {
