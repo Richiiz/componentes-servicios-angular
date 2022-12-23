@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // servicio de angular para obtener datos de API
-import {HttpClient} from '@angular/common/http'
+import { HttpClient, HttpParams} from '@angular/common/http'
 
 import { Product, CreateProductDTO, UpdateProductDTO} from './../models/product.models';
 
@@ -15,11 +15,26 @@ export class ProductsService {
     private http: HttpClient
   ) { }
 
-  getAllProducts() {
-    return this.http.get<Product[]>(this.apiUrl);
+  // una manera de poder obtener los productos de forma dinamica sin dos metodos (que son getPtoduct y getProductsByPage) es la siguiente
+  // le ponemos el limit y el offset al metodo de manera opcional, si no los envia, simplemente envia los 50 productos
+  getAllProducts( limit?: number, offset?: number ) {
+    // creamos parametros para que obtenga los datos de forma dinamica
+    let params = new HttpParams();
+    // si el limit y el offset vienen entonces configuramos los parametros
+    if (limit && offset) {
+      params = params.set('limit', limit);
+      params = params.set('offset', limit);
+    }
+    return this.http.get<Product[]>(this.apiUrl, { params });
   }
   getProduct(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+  getProductsByPage(limit: number, offset: number){
+    return this.http.get<Product[]>(`${this.apiUrl}`, {
+      params: { limit, offset }
+    })
   }
 
   // a la hora de llamar al servicio create tengo que enviarle la interfaz de tipo Product

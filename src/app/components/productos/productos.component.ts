@@ -29,6 +29,8 @@ export class ProductosComponent implements OnInit {
     },
     description: '',
   }
+  limit = 10;
+  offset = 0;
   today = new Date();
   date = new Date(2021, 1, 21)
 
@@ -41,9 +43,11 @@ export class ProductosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productsService.getAllProducts()
+    this.productsService.getProductsByPage(10, 0)
     .subscribe(data => {
       this.products = data;
+      // siempre hay que darle un estado inicial, asi que como ya cargo la primer pagina, pues deberiamos dejarlo en la siguiente pagina.
+      this.offset += this.limit;
     });
   }
 
@@ -112,6 +116,17 @@ onShowDetail(id: string){
       this.products.splice(productIndex, 1);
       // cierra nuestro slice para que se vea bonito uwu
       this,this.showProductDetail = false
+    });
+  }
+
+  loadMore () {
+        this.productsService.getProductsByPage(this.limit, this.offset)
+    .subscribe(data => {
+      // concatenamos los nuevos elementos que trae de la data y los ponemos en nuestro array
+      // concat es un metodo de los arrays que no muta el array original
+      // por ende generamos de nuevo el array y se lo asignamos de nuevo al products
+      this.products = this.products.concat(data);
+      this.offset += this.limit
     });
   }
 }

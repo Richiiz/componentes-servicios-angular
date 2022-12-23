@@ -26,6 +26,7 @@
   (addedProduct)="onAddToShoppingCar($event)"
   (showProduct)="onShowDetail($event)"
   ></app-product>
+  <button (click)="loadMore()">load More</button>
 </div>
 <!-- esto muestra una clase dinamica que viene del archivo productos.components.ts -->
 <div class="product-detail" [class.active]="showProductDetail">
