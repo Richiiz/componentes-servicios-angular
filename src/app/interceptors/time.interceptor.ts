@@ -6,7 +6,6 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// tab lo que hace es correr un proceso sin tener que modificar o cambiar algo la respuesta que se envie
 import { tap } from 'rxjs/operators';
 
 @Injectable()
@@ -20,9 +19,9 @@ export class TimeInterceptor implements HttpInterceptor {
     .handle(request)
     .pipe(
       tap(() => {
-        const time = (performance.now() - start)+ 'ms';
+        const time = (performance.now() - start) + 'ms';
         console.log(request.url, time);
       })
-    )
+    );
   }
 }

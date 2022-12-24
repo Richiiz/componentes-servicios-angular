@@ -7,7 +7,7 @@ import { formatDistance } from 'date-fns';
 export class TimeAgoPipe implements PipeTransform {
 
   transform(value: Date): string {
-    return formatDistance(new Date(), value)
+    return formatDistance(new Date(), value);
   }
 
 }

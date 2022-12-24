@@ -1,94 +1,72 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterViewInit, OnDestroy, SimpleChanges} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterViewInit, OnDestroy, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-img',
   templateUrl: './img.component.html',
   styleUrls: ['./img.component.scss']
 })
-
-// cuando implementamos una nueva interfaz tenemos que implementar un metodo para que no salga error :D
-// aqui se exporto "OnChanges" y "AfterViewInit"
-export class ImgComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-
-
+export class ImgComponent {
 
   img: string = '';
-// aqui solamente estamos escuchando un elemento en ves de poner todos los demas que estan abajo, asi aseguramos escuchar uno solo en ves de todos
-// como esta puesto en el componente ngOnChanges
+
+  // eslint-disable-next-line @angular-eslint/no-input-rename
   @Input('img')
-  set changeImg(newImg: string){
+  set changeImg(newImg: string) {
     this.img = newImg;
-    console.log('cambios solo en img =>' ,this.img)
-    // codigo
+    // console.log('change just img  =>' ,this.img);
+    // code
   }
-
-
   @Input() alt: string = '';
-
-  // @Input() alt2: string = '';
-  // @Input() alt3: string = '';
-
-
-
-  @Output() load = new EventEmitter<string>();
-  imageDefault = "./assets/images/si.jpg"
-
+  @Output() loaded = new EventEmitter<string>();
+  imageDefault = './assets/images/default.png';
   // counter = 0;
   // counterFn: number | undefined;
 
-
-
-
-
-  // el constructor es lo primero que corre antes de renderizar.
-  // es importante que no corras cosas asincronas
-  // esto corre solo una vez
   constructor() {
-    console.log('constructor', 'imgValue => ', this.img);
+    // before render
+    // NO async -- once time
+    // console.log('constructor', 'imgValue =>', this.img);
   }
 
-  // esto es un metodo implementado :O
-  ngOnChanges(changes: SimpleChanges) {
-  // este corre antes y durante del render
-  // actualiza los cambios en los inputs o_O muchas veces, tantas como nosotros los actualicemos
-  console.log('ngOnChanges', 'imgValue => ', this.img);
-  // esta linea escucha todos los cambios de todos los inputs, lo que representa una ventaja y desventaja dependiendo del caso
-  console.log('changes', changes);
+  // ngOnChanges(changes: SimpleChanges) {
+  //   // before - during render
+  //   // changes inputs -- multiples times
+  //   console.log('ngOnChanges', 'imgValue =>', this.img);
+  //   console.log('changes', changes);
+  //   // if (changes.) {
+  //   //   // code
+  //   // }
+  // }
+
+  // ngOnInit(): void {
+  //   // before render
+  //   // async - fetch -- once time
+  //   console.log('ngOnInit', 'imgValue =>', this.img);
+  //   // this.counterFn = window.setInterval(() => {
+  //   //   this.counter += 1;
+  //   //   console.log('run counter');
+  //   // }, 1000);
+  // }
+
+  // ngAfterViewInit() {
+  //   // after render
+  //   // handler children -- once time
+  //   console.log('ngAfterViewInit');
+  // }
+
+  // ngOnDestroy() {
+  //   // delete -- once time
+  //   console.log('ngOnDestroy');
+  //   // window.clearInterval(this.counterFn);
+  // }
+
+  imgError() {
+    this.img = this.imageDefault;
   }
 
-  ngOnInit(): void {
-    // este tambien corre antes de renderizarse : /
-    // aqui si podemos correr cosas asincronas :D
-    // tambien corre una sola vez D:
-    console.log('ngOnInit', 'imgValue => ', this.img);
-  // con esto correremos un contador que se autosuma cada segundo
-  // this.counterFn = window.setInterval(()=>{
-    //   this.counter += 1;
-    //   console.log('corriento counter');
-    // }, 1000)
-}
-
-  ngAfterViewInit() {
-    // este corre depsues del render
-    // aqui normalmente se manejan los hijos
-    console.log('ngAfterViewInit');
+  imgLoaded() {
+    // console.log('log hijo');
+    this.loaded.emit(this.img);
   }
-
-  ngOnDestroy() {
-    // este borra componentes, se borra de la interfaz y deja de existir
-    console.log('ngOnDestroy');
-    // esta es la manera correcta de matar un elemento
-    // window.clearInterval (this.counterFn)
-  }
-
-  imgError(){
-this.img = this.imageDefault;
-  }
-
-  // con esto emitimos eventos desde el hijo al padre, requiere importar "OutPut" y "EventEmitter"
-  imgLoad(){
-console.log('log hijo');
-this.load.emit(this.img);
-}
 
 }
