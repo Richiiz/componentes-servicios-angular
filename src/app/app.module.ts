@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SwiperModule } from 'swiper/angular';
 
 // activando el modulo de http para obtener datos de una API
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +16,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { ReversePipe } from './pipies/reverse.pipe';
 import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
-import Swiper from 'swiper';
+import { TimeInterceptor } from './interceptors/time.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,9 @@ import Swiper from 'swiper';
     FormsModule,
     SwiperModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TimeInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
